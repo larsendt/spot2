@@ -9,6 +9,9 @@ def take_reading():
     gs.insert_reading("ph_sensor", value, units)
     return value, units
 
+def historical(start, stop):
+    return gs.historical("ph_sensor", start, stop)
+
 if __name__ == "__main__":
     try:
         take_reading()

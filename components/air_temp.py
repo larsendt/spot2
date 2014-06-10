@@ -9,6 +9,9 @@ def take_reading():
     gs.insert_reading("air_temp_sensor", value, units)
     return value, units
 
+def historical(start, stop):
+    return gs.historical("air_temp_sensor", start, stop)
+
 if __name__ == "__main__":
     try:
         take_reading()

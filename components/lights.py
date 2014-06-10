@@ -7,8 +7,10 @@ DB = "lights_data.sqlite"
 CREATE_SQL = "CREATE TABLE IF NOT EXISTS lights_data (lights_status INTEGER, time REAL)"
 INSERT_SQL = "INSERT INTO lights_data VALUES (?,?)"
 LATEST_SQL = "SELECT lights_status FROM lights_data ORDER BY time DESC LIMIT 1"
+HISTORICAL_SQL = "SELECT * FROM lights_data WHERE time >= ? AND time <= ? ORDER BY time DESC"
 
 def lights_on():
+    sc.init_db(DB, CREATE_SQL)
     v = sc.select(DB, LATEST_SQL, [])
     if v is None:
         return False
@@ -41,6 +43,7 @@ def off_time():
 def set_lights(on):
     val = int(on)
     t = time.time()
+    sc.init_db(DB, CREATE_SQL)
     sc.insert(DB, INSERT_SQL, (val, t))
 
 
@@ -56,10 +59,12 @@ def status():
     s = "on" if lights_on() else "off"
     return s, "bool"
 
+def historical(start, stop):
+    sc.init_db(DB, CREATE_SQL)
+    return sc.select(DB, HISTORICAL_SQL, (start, stop))
 
 if __name__ == "__main__":
     try:
-        sc.init_db(DB, CREATE_SQL)
         maybe_set_lights()
     except Exception as e:
         sc.log_exception(e)
