@@ -28,7 +28,7 @@ def insert(db, insert_sql, values):
     c.execute(insert_sql, values)
     conn.commit()
     conn.close()
-    print "Inserted:", values
+    print "[%s] Inserted: %s" % (db, values)
 
 
 def select(db, select_sql, values):
