@@ -53,9 +53,9 @@ def maybe_set_lights():
 
 
 if __name__ == "__main__":
-    sc.init_db(DB, CREATE_SQL)
-    #try:
-    maybe_set_lights()
-    #except Exception as e:
-    #    sc.log_exception(e)
+    try:
+        sc.init_db(DB, CREATE_SQL)
+        maybe_set_lights()
+    except Exception as e:
+        sc.log_exception(e)
 
