@@ -4,6 +4,7 @@ import sqlite3
 import json
 import time
 import traceback
+import sys
 
 DB_PREFIX = "../db/"
 
@@ -28,7 +29,6 @@ def insert(db, insert_sql, values):
     c.execute(insert_sql, values)
     conn.commit()
     conn.close()
-    print "[%s] Inserted: %s" % (db, values)
 
 
 def select(db, select_sql, values):
@@ -58,18 +58,18 @@ def log_error(*args):
     s = " ".join(map(str, args))
     init_db("errors.sqlite", "CREATE TABLE IF NOT EXISTS errors (msg TEXT, time REAL, seen INTEGER)")
     insert("errors.sqlite", "INSERT INTO errors VALUES (?,?,?)", (s, time.time(), 0))
-    print s
+    print >> sys.stderr, s
 
 
 def log_warning(*args):
     s = " ".join(map(str, args))
     init_db("warnings.sqlite", "CREATE TABLE IF NOT EXISTS warnings (msg TEXT, time REAL, seen INTEGER)")
     insert("warnings.sqlite", "INSERT INTO warnings VALUES (?,?,?)", (s, time.time(), 0))
-    print s
+    print >> sys.stderr, s
 
 
 def log_exception(exc):
     s = traceback.format_exc(exc)
     init_db("exceptions.sqlite", "CREATE TABLE IF NOT EXISTS exceptions (msg TEXT, time REAL, seen INTEGER)")
     insert("exceptions.sqlite", "INSERT INTO exceptions VALUES (?,?,?)", (s, time.time(), 0))
-    print s
+    print >> sys.stderr, s

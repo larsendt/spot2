@@ -10,8 +10,9 @@ INSERT_SQL = "INSERT INTO battery_status VALUES (?,?,?)"
 def take_reading():
     sc.init_db(DB, CREATE_SQL)
     percent = 65.0
-    charging = 1
+    charging = True
     sc.insert(DB, INSERT_SQL, (percent, charging, time.time()))
+    return (percent, "percent", charging, "bool")
 
 if __name__ == "__main__":
     try:

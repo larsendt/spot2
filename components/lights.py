@@ -52,6 +52,11 @@ def maybe_set_lights():
         set_lights(False)
 
 
+def status():
+    s = "on" if lights_on() else "off"
+    return s, "bool"
+
+
 if __name__ == "__main__":
     try:
         sc.init_db(DB, CREATE_SQL)

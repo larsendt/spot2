@@ -7,6 +7,7 @@ def take_reading():
     value = 78.0
     units = "deg F"
     gs.insert_reading("air_temp_sensor", value, units)
+    return value, units
 
 if __name__ == "__main__":
     try:

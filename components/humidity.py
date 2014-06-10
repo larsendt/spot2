@@ -7,6 +7,7 @@ def take_reading():
     value = 45.0
     units = "humidity_units"
     gs.insert_reading("humidity_sensor", value, units)
+    return value, units
 
 if __name__ == "__main__":
     try:

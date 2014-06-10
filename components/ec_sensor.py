@@ -7,6 +7,7 @@ def take_reading():
     value = 1337.5
     units = "ec_units"
     gs.insert_reading("ec_sensor", value, units)
+    return value, units
 
 if __name__ == "__main__":
     try:

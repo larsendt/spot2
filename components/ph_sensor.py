@@ -7,6 +7,7 @@ def take_reading():
     value = 7.0
     units = "pH"
     gs.insert_reading("ph_sensor", value, units)
+    return value, units
 
 if __name__ == "__main__":
     try:
