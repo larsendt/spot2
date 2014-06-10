@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 
 import json
@@ -29,63 +29,148 @@ def sensors():
 
 @app.route("/sensors/air_temp")
 def r_air_temp():
-    value, units = air_temp.take_reading()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(air_temp.historical(start, stop))
+    else:
+        value, units = air_temp.take_reading()
+        return json.dumps({"value":value, "units":units})
+
 
 @app.route("/sensors/battery_level")
 def r_battery_level():
-    percent, p, charging, c = battery.take_reading()
-    return json.dumps({"value":percent, "units":p})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(battery.historical_levels(start, stop))
+    else:
+        percent, p, charging, c = battery.take_reading()
+        return json.dumps({"value":percent, "units":p})
 
 @app.route("/sensors/battery_charging")
 def r_battery_charging():
-    percent, p, charging, c = battery.take_reading()
-    return json.dumps({"value":charging, "units":c})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(battery.historical_charging(start, stop))
+    else:
+        percent, p, charging, c = battery.take_reading()
+        return json.dumps({"value":charging, "units":c})
 
 @app.route("/sensors/curtain")
 def r_curtain():
-    value, units = curtain.status()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(curtain.historical(start, stop))
+    else:
+        value, units = curtain.status()
+        return json.dumps({"value":value, "units":units})
 
 @app.route("/sensors/ec")
 def r_ec():
-    value, units = ec_sensor.take_reading()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(ec_sensor.historical(start, stop))
+    else:
+        value, units = ec_sensor.take_reading()
+        return json.dumps({"value":value, "units":units})
 
 @app.route("/sensors/fans")
 def r_fans():
-    value, units = fans.status()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(fans.historical(start, stop))
+    else:
+        value, units = fans.status()
+        return json.dumps({"value":value, "units":units})
 
 @app.route("/sensors/humidity")
 def r_humidity():
-    value, units = humidity.take_reading()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(humidity.historical(start, stop))
+    else:
+        value, units = humidity.take_reading()
+        return json.dumps({"value":value, "units":units})
 
 @app.route("/sensors/lights")
 def r_lights():
-    value, units = lights.status()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(lights.historical(start, stop))
+    else:
+        value, units = lights.status()
+        return json.dumps({"value":value, "units":units})
 
 @app.route("/sensors/ph")
 def r_ph():
-    value, units = ph_sensor.take_reading()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(ph_sensor.historical(start, stop))
+    else:
+        value, units = ph_sensor.take_reading()
+        return json.dumps({"value":value, "units":units})
 
 @app.route("/sensors/pumps")
 def r_pumps():
-    value, units = pumps.status()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(pumps.historical(start, stop))
+    else:
+        value, units = pumps.status()
+        return json.dumps({"value":value, "units":units})
 
 @app.route("/sensors/rotation")
 def r_rotation():
-    value, units = rotation.status()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(rotation.historical(start, stop))
+    else:
+        value, units = rotation.status()
+        return json.dumps({"value":value, "units":units})
 
 @app.route("/sensors/water_temp")
 def r_water_temp():
-    value, units = water_temp.take_reading()
-    return json.dumps({"value":value, "units":units})
+    start = request.args.get("start_time")
+    stop = request.args.get("stop_time")
+    if start and stop:
+        start = float(start)
+        stop = float(stop)
+        return json.dumps(water_temp.historical(start, stop))
+    else:
+        value, units = water_temp.take_reading()
+        return json.dumps({"value":value, "units":units})
 
 if __name__ == "__main__":
     app.debug = True

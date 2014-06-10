@@ -18,11 +18,13 @@ def take_reading():
 
 def historical_levels(start, stop):
     sc.init_db(DB, CREATE_SQL)
-    return sc.select(DB, HISTORICAL_LEVELS_SQL, (start, stop))
+    values = sc.select(DB, HISTORICAL_LEVELS_SQL, (start, stop))
+    return [(p, "percent", t) for (p, t) in values]
 
 def historical_charging(start, stop):
     sc.init_db(DB, CREATE_SQL)
-    return sc.select(DB, HISTORICAL_CHARGING_SQL, (start, stop))
+    values = sc.select(DB, HISTORICAL_CHARGING_SQL, (start, stop))
+    return [(c, "bool", t) for (c, t) in values]
 
 if __name__ == "__main__":
     try:
